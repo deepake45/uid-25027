@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Amrita Sales</title>
+<h1>Diwali Sale - Up to 50% Off!</h1>
+<style>
+body{
+font-family: Arial;
+margin:0;
+}
+
+header{
+background:#c61d2d;
+color:white;
+padding:15px;
+font-size:22px;
+}
+
+.container{
+display:flex;
+}
+
+
+x
+.sidebar{
+width:220px;
+background:#c61d2d;
+color:white;
+padding:20px;
+height:500px;
+}
+
+.sale-banner{
+background:#ffe5e5;
+color:#c61d2d;
+text-align:center;
+padding:10px;
+font-size:20px;
+font-weight:bold;
+}
+
+.sidebar label{
+display:block;
+margin:10px 0;
+cursor:pointer;
+}
+
+
+
+input{
+display:none;
+}
+
+
+
+
+
+.products{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+padding:20px;
+flex:1;
+}
+
+
+
+.card{
+border:1px solid #ddd;
+padding:10px;
+background:#f8f8f8;
+}
+
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
+
+.price{
+font-weight:bold;
+margin-top:5px;
+}
+
+button{
+background:#c61d2d;
+color:white;
+border:none;
+padding:6px 12px;
+margin-top:5px;
+cursor:pointer;
+}
+
+/* Hide all products by default, show only the checked category */
+.products .card {
+  display: none;
+}
+
+#all:checked ~ .container .card,
+#electronics:checked ~ .container .electronics,
+#clothing:checked ~ .container .clothing,
+#books:checked ~ .container .books,
+#home:checked ~ .container .home {
+  display: block;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>Amrita Sales</header>
+
+
+<input type="radio" name="cat" id="all" checked>
+<input type="radio" name="cat" id="electronics">
+<input type="radio" name="cat" id="clothing">
+<input type="radio" name="cat" id="home">
+<input type="radio" name="cat" id="books">
+<div class="sale-banner">
+🎉 Diwali Sale - 50% OFF on Selected Products 🎉
+</div>
+<div class="container">
+
+<div class="sidebar">
+
+<h3>Filter By Categories</h3>
+
+<label for="all">> All</label>
+<label for="electronics">> Electronics</label>
+<label for="clothing">> Clothing</label>
+<label for="home">> Home Goods</label>
+<label for="books">> Books</label>
+
+</div>
+
+
+<div class="products">
+
+<div class="card books">
+<img src="https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg">
+<h4>Little Prince</h4>
+<p>Classic story book</p>
+<p class="price">₹1000</p>
+<button>Add to Cart</button>
+</div>
+
+<div class="card clothing">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
+<h4>T Shirt</h4>
+<p>Comfortable cotton t-shirt</p>
+<p class="price">₹1000</p>
+<button>Add to Cart</button>
+</div>
+
+<div class="card electronics">
+<img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8">
+<h4>Laptop</h4>
+<p>High performance laptop</p>
+<p class="price">₹50000</p>
+<button>Add to Cart</button>
+</div>
+
+<div class="card electronics">
+<img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9">
+<h4>Mobile Phone</h4>
+<p>Android smartphone</p>
+<p class="price">₹10000</p>
+<button>Add to Cart</button>
+</div>
+
+<div class="card home">
+<img src="https://images.unsplash.com/photo-1586201375761-83865001e31c">
+<h4>Microwave</h4>
+<p>Home appliance</p>
+<p class="price">₹8000</p>
+<button>Add to Cart</button>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
