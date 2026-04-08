@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            color: #555;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-info {
+            background-color: #f0f5ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .contact-info h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .contact-box {
+            margin-bottom: 15px;
+        }
+
+        .contact-box strong {
+            color: #764ba2;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="phone"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="phone"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        @media (max-width: 768px) {
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>Contact Us</h2>
+        
+        <p>
+            Have a question or ready to start your next project? We'd love to hear from you! 
+            Get in touch with us using the form below or through our contact information.
+        </p>
+
+        <div class="contact-wrapper">
+            <!-- Contact Form -->
+            <div>
+                <h3 style="color: #667eea; margin-bottom: 20px;">Send us a Message</h3>
+                <form onsubmit="submitForm(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                
+                <div class="contact-box">
+                    <strong>Email:</strong>
+                    <p>info@miniwebsite.com</p>
+                </div>
+
+                <div class="contact-box">
+                    <strong>Phone:</strong>
+                    <p>+1 (555) 123-4567</p>
+                </div>
+
+                <div class="contact-box">
+                    <strong>Address:</strong>
+                    <p>123 Web Street<br>Digital City, DC 12345<br>United States</p>
+                </div>
+
+                <div class="contact-box">
+                    <strong>Hours:</strong>
+                    <p>Monday - Friday: 9AM - 6PM<br>Saturday - Sunday: Closed</p>
+                </div>
+
+                <div class="contact-box">
+                    <strong>Follow Us:</strong>
+                    <p>
+                        <a href="#" style="color: #667eea; text-decoration: none; margin-right: 10px;">Facebook</a>
+                        <a href="#" style="color: #667eea; text-decoration: none; margin-right: 10px;">Twitter</a>
+                        <a href="#" style="color: #667eea; text-decoration: none;">LinkedIn</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            
+            alert('Thank you, ' + name + '!\n\nYour message has been sent successfully.\nWe will get back to you at ' + email + ' soon.');
+            
+            // Reset form
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>

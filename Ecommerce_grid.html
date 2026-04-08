@@ -1,0 +1,138 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>E-Commerce Store</title>
+        <style>
+            body {
+             margin: auto;
+             font-family: 'Times New Roman', Times, serif;
+             background-color: white;   
+            }
+            .container {
+                display: grid;
+                grid-template-columns: auto auto 1fr auto;
+                grid-template-rows: 80px 100px 1fr 100px;
+                grid-template-areas:
+                "header header header header"
+                "sale sale sale sale"
+                "sidebar products products products"
+                "footer footer footer footer";
+                gap: 20px;
+                padding: 20px;
+            }
+            .header {
+                grid-area: header;
+                background-color: #a63d55;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+            }
+            .sale {
+                grid-area: sale;
+                background-color: #7a1f33;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+            }
+            .sidebar {
+                grid-area: sidebar;
+                background-color: #a9445b;
+                color: white;
+                padding: 15px;
+            }
+            .sidebar button {
+                display: block;
+                width: 100%;
+                padding: 10px 15px;
+                margin: 10px 0;
+                background-color: #7a1f33;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 14px;
+                cursor: pointer;
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .sidebar button:hover {
+                background-color: #5a1523;
+            }
+            .products {
+                grid-area: products;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .product-card {
+                background-color: white;
+                border-radius: 10px;
+                padding: 15px;
+                text-align: center;
+            }
+            .product-card img {
+                width: 100%;
+                height: 150px;
+                object-fit: contain;
+                border-radius: 10px;
+            }
+            .product-card h3 {
+                margin: 10px 0;
+            }
+            .product-card p {
+                color: #a63d55;
+                font-weight: bold;
+            }
+            .footer {
+                grid-area: footer;
+                background-color: #7a1f33;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">Welcome to Our E-Commerce Store</div>
+            <div class="sale">Big Sale! Up to 50% Off on Selected Items</div>
+            <div class="sidebar">
+                <h2>Categories</h2>
+                <button>Electronics</button>
+                <button>Fashion</button>
+                <button>Home & Garden</button>
+                <button>Sports & Outdoors</button>
+                <button>Health & Beauty</button>
+            </div>
+            <div class="products">
+                <div class="product-card">
+                    <img src="product1.jpg" alt="Product 1">
+                    <h3>Product 1</h3>
+                    <p>$29.99</p>
+                </div>
+                <div class="product-card">
+                    <img src="product2.jpg" alt="Product 2">
+                    <h3>Product 2</h3>
+                    <p>$49.99</p>
+                </div>
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x150" alt="Product 3">
+                    <h3>Product 3</h3>
+                    <p>$19.99</p>
+                </div>
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x150" alt="Product 4">
+                    <h3>Product 4</h3>
+                    <p>$39.99</p>
+                </div>
+            </div>
+            <div class="footer">© 2026 E-Commerce Store. All rights reserved.</div>
+        </div>
+    </body>
+
+</html>
