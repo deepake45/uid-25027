@@ -44,22 +44,6 @@
                 color: white;
                 padding: 15px;
             }
-            .sidebar button {
-                display: block;
-                width: 100%;
-                padding: 10px 15px;
-                margin: 10px 0;
-                background-color: #7a1f33;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                font-size: 14px;
-                cursor: pointer;
-                font-family: 'Times New Roman', Times, serif;
-            }
-            .sidebar button:hover {
-                background-color: #5a1523;
-            }
             .products {
                 grid-area: products;
                 display: grid;
@@ -72,11 +56,16 @@
                 border-radius: 10px;
                 padding: 15px;
                 text-align: center;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+            .product-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
             }
             .product-card img {
                 width: 100%;
                 height: 150px;
-                object-fit: contain;
+                object-fit: cover;
                 border-radius: 10px;
             }
             .product-card h3 {
@@ -85,6 +74,65 @@
             .product-card p {
                 color: #a63d55;
                 font-weight: bold;
+            }
+            .category-input {
+                display: none;
+            }
+            .category-button {
+                display: block;
+                width: 100%;
+                padding: 10px 15px;
+                margin: 10px 0;
+                background-color: #7a1f33;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 14px;
+                cursor: pointer;
+                font-family: 'Times New Roman', Times, serif;
+                text-align: center;
+            }
+            .category-button:hover {
+                background-color: #5a1523;
+            }
+            #cat-all:checked ~ .sidebar label[for="cat-all"],
+            #cat-electronics:checked ~ .sidebar label[for="cat-electronics"],
+            #cat-fashion:checked ~ .sidebar label[for="cat-fashion"],
+            #cat-home-garden:checked ~ .sidebar label[for="cat-home-garden"],
+            #cat-sports-outdoors:checked ~ .sidebar label[for="cat-sports-outdoors"],
+            #cat-health-beauty:checked ~ .sidebar label[for="cat-health-beauty"] {
+                background-color: #5a1523;
+            }
+            .products .product-card {
+                display: none;
+            }
+            #cat-all:checked ~ .products .product-card {
+                display: block;
+            }
+            #cat-electronics:checked ~ .products .product-card[data-category="electronics"],
+            #cat-fashion:checked ~ .products .product-card[data-category="fashion"],
+            #cat-home-garden:checked ~ .products .product-card[data-category="home-garden"],
+            #cat-sports-outdoors:checked ~ .products .product-card[data-category="sports-outdoors"],
+            #cat-health-beauty:checked ~ .products .product-card[data-category="health-beauty"] {
+                display: block;
+            }
+            .sale::after {
+                content: "Big Sale! Up to 50% Off on Selected Items";
+            }
+            #cat-electronics:checked ~ .sale::after {
+                content: "Showing electronics products";
+            }
+            #cat-fashion:checked ~ .sale::after {
+                content: "Showing fashion products";
+            }
+            #cat-home-garden:checked ~ .sale::after {
+                content: "Showing home & garden products";
+            }
+            #cat-sports-outdoors:checked ~ .sale::after {
+                content: "Showing sports & outdoors products";
+            }
+            #cat-health-beauty:checked ~ .sale::after {
+                content: "Showing health & beauty products";
             }
             .footer {
                 grid-area: footer;
@@ -99,35 +147,42 @@
     </head>
     <body>
         <div class="container">
+            <input class="category-input" type="radio" name="category" id="cat-all" checked>
+            <input class="category-input" type="radio" name="category" id="cat-electronics">
+            <input class="category-input" type="radio" name="category" id="cat-fashion">
+            <input class="category-input" type="radio" name="category" id="cat-home-garden">
+            <input class="category-input" type="radio" name="category" id="cat-sports-outdoors">
+            <input class="category-input" type="radio" name="category" id="cat-health-beauty">
             <div class="header">Welcome to Our E-Commerce Store</div>
-            <div class="sale">Big Sale! Up to 50% Off on Selected Items</div>
+            <div class="sale"></div>
             <div class="sidebar">
                 <h2>Categories</h2>
-                <button>Electronics</button>
-                <button>Fashion</button>
-                <button>Home & Garden</button>
-                <button>Sports & Outdoors</button>
-                <button>Health & Beauty</button>
+                <label for="cat-all" class="category-button">All Products</label>
+                <label for="cat-electronics" class="category-button">Electronics</label>
+                <label for="cat-fashion" class="category-button">Fashion</label>
+                <label for="cat-home-garden" class="category-button">Home & Garden</label>
+                <label for="cat-sports-outdoors" class="category-button">Sports & Outdoors</label>
+                <label for="cat-health-beauty" class="category-button">Health & Beauty</label>
             </div>
             <div class="products">
-                <div class="product-card">
-                    <img src="product1.jpg" alt="Product 1">
-                    <h3>Product 1</h3>
+                <div class="product-card" data-category="electronics">
+                    <img src="C:\LOCAL DISK(D)\DEEPAK\AV.SC.U4CSE25027\LAB6\wirelesshp.webp" alt="Wireless Headphones">
+                    <h3>Wireless Headphones</h3>
                     <p>$29.99</p>
                 </div>
-                <div class="product-card">
-                    <img src="product2.jpg" alt="Product 2">
-                    <h3>Product 2</h3>
+                <div class="product-card" data-category="fashion">
+                    <img src="C:\LOCAL DISK(D)\DEEPAK\AV.SC.U4CSE25027\LAB6\sneakers.webp" alt="Fashion Sneaker">
+                    <h3>Fashion Sneaker</h3>
                     <p>$49.99</p>
                 </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x150" alt="Product 3">
-                    <h3>Product 3</h3>
+                <div class="product-card" data-category="home-garden">
+                    <img src="C:\LOCAL DISK(D)\DEEPAK\AV.SC.U4CSE25027\LAB6\grandlantern.webp" alt="Garden Lantern">
+                    <h3>Garden Lantern</h3>
                     <p>$19.99</p>
                 </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x150" alt="Product 4">
-                    <h3>Product 4</h3>
+                <div class="product-card" data-category="sports-outdoors">
+                    <img src="C:\LOCAL DISK(D)\DEEPAK\AV.SC.U4CSE25027\LAB6\waterbottle.webp" alt="Sports Water Bottle">
+                    <h3>Sports Water Bottle</h3>
                     <p>$39.99</p>
                 </div>
             </div>
