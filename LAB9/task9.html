@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Number Programs</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f4f4f4;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background: white;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #output {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Number Checker</h2>
+
+    <input type="number" id="num" placeholder="Enter a number">
+
+    <br>
+
+    <button onclick="checkEven()">Even</button>
+    <button onclick="checkOdd()">Odd</button>
+    <button onclick="checkPrime()">Prime</button>
+    <button onclick="factorial()">Factorial</button>
+    <button onclick="armstrong()">Armstrong</button>
+
+    <div id="output">Output will appear here</div>
+</div>
+
+<script>
+    function getNumber() {
+        return parseInt(document.getElementById("num").value);
+    }
+
+    function display(msg) {
+        document.getElementById("output").innerHTML = msg;
+    }
+
+    function checkEven() {
+        let n = getNumber();
+        if (n % 2 === 0)
+            display(n + " is Even");
+        else
+            display(n + " is Not Even");
+    }
+
+    function checkOdd() {
+        let n = getNumber();
+        if (n % 2 !== 0)
+            display(n + " is Odd");
+        else
+            display(n + " is Not Odd");
+    }
+
+    function checkPrime() {
+        let n = getNumber();
+        let isPrime = true;
+
+        if (n <= 1) isPrime = false;
+
+        for (let i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) {
+                isPrime = false;
+                break;
+            }
+        }
+
+        if (isPrime)
+            display(n + " is Prime");
+        else
+            display(n + " is Not Prime");
+    }
+
+    function factorial() {
+        let n = getNumber();
+        let fact = 1;
+
+        for (let i = 1; i <= n; i++) {
+            fact *= i;
+        }
+
+        display("Factorial of " + n + " is " + fact);
+    }
+
+    function armstrong() {
+        let n = getNumber();
+        let sum = 0;
+        let temp = n;
+
+        while (temp > 0) {
+            let digit = temp % 10;
+            sum += digit * digit * digit;
+            temp = Math.floor(temp / 10);
+        }
+
+        if (sum === n)
+            display(n + " is an Armstrong Number");
+        else
+            display(n + " is Not an Armstrong Number");
+    }
+</script>
+
+</body>
+</html>
