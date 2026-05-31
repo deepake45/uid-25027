@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Username Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .error {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter Username</h1>
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" oninput="validateUsername()">
+        <div id="message" class="error" style="display: none;"></div>
+    </form>
+
+    <script>
+        function validateUsername() {
+            const username = document.getElementById('username').value;
+            const message = document.getElementById('message');
+            
+            if (username.length < 5) {
+                message.textContent = 'Username must be at least 5 characters.';
+                message.style.display = 'block';
+            } else {
+                message.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Souled Store</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <marquee behavior="scroll" direction="left" scrollamount="4">
+      🚚 FREE DELIVERY on orders above ₹499 &nbsp;|&nbsp; 🎉 NEW ARRIVALS: Anime, Movies & TV drops &nbsp;|&nbsp; 🔥 USE CODE: INKED10 for 10% OFF &nbsp;|&nbsp; 💥 OFFICIAL LICENSED MERCHANDISE
+    </marquee>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button class="hamburger" id="hamburgerBtn"><i class="fa fa-bars"></i></button>
+        <a href="#" class="logo">
+          <span class="logo-text">The Souled Store  </span>
+        </a>
+      </div>
+
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li class="nav-item has-dropdown">
+            <a href="#">Men <i class="fa fa-chevron-down"></i></a>
+            <div class="mega-dropdown">
+              <div class="mega-col">
+                <h4>Categories</h4>
+                <ul>
+                  <li><a href="#">T-Shirts</a></li>
+                  <li><a href="#">Oversized Tees</a></li>
+                  <li><a href="#">Hoodies & Sweatshirts</a></li>
+                  <li><a href="#">Joggers</a></li>
+                  <li><a href="#">Shorts</a></li>
+                  <li><a href="#">Jackets</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <h4>By Theme</h4>
+                <ul>
+                  <li><a href="#">Anime</a></li>
+                  <li><a href="#">Marvel & DC</a></li>
+                  <li><a href="#">TV & Movies</a></li>
+                  <li><a href="#">Music</a></li>
+                  <li><a href="#">Minimalist</a></li>
+                  <li><a href="#">Sports</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <h4>Featured</h4>
+                <ul>
+                  <li><a href="#">New Arrivals</a></li>
+                  <li><a href="#">Best Sellers</a></li>
+                  <li><a href="#">Limited Edition</a></li>
+                  <li><a href="#">Sale</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="#">Women <i class="fa fa-chevron-down"></i></a>
+            <div class="mega-dropdown">
+              <div class="mega-col">
+                <h4>Categories</h4>
+                <ul>
+                  <li><a href="#">T-Shirts</a></li>
+                  <li><a href="#">Crop Tops</a></li>
+                  <li><a href="#">Hoodies</a></li>
+                  <li><a href="#">Dresses</a></li>
+                  <li><a href="#">Joggers</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <h4>By Theme</h4>
+                <ul>
+                  <li><a href="#">Anime</a></li>
+                  <li><a href="#">Pop Culture</a></li>
+                  <li><a href="#">Pastel Drops</a></li>
+                  <li><a href="#">Minimalist</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <h4>Featured</h4>
+                <ul>
+                  <li><a href="#">New Arrivals</a></li>
+                  <li><a href="#">Best Sellers</a></li>
+                  <li><a href="#">Sale</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="#">Kids <i class="fa fa-chevron-down"></i></a>
+            <div class="mega-dropdown">
+              <div class="mega-col">
+                <h4>Categories</h4>
+                <ul>
+                  <li><a href="#">T-Shirts</a></li>
+                  <li><a href="#">Sets</a></li>
+                  <li><a href="#">Hoodies</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="#">Accessories <i class="fa fa-chevron-down"></i></a>
+            <div class="mega-dropdown">
+              <div class="mega-col">
+                <h4>Products</h4>
+                <ul>
+                  <li><a href="#">Phone Cases</a></li>
+                  <li><a href="#">Mugs</a></li>
+                  <li><a href="#">Bags & Totes</a></li>
+                  <li><a href="#">Caps & Hats</a></li>
+                  <li><a href="#">Socks</a></li>
+                  <li><a href="#">Stickers</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item"><a href="#" class="sale-link">SALE 🔥</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-right">
+        <div class="search-box" id="searchBox">
+          <input type="text" placeholder="Search for products, themes..." id="searchInput"/>
+          <button id="searchClose"><i class="fa fa-times"></i></button>
+        </div>
+        <button class="icon-btn" id="searchToggle"><i class="fa fa-search"></i></button>
+        <button class="icon-btn"><i class="fa fa-user"></i></button>
+        <button class="icon-btn" id="wishlistBtn"><i class="fa fa-heart"></i><span class="badge" id="wishlistCount">0</span></button>
+        <button class="icon-btn" id="cartBtn"><i class="fa fa-shopping-bag"></i><span class="badge" id="cartCount">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+  <nav class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-header">
+      <span class="logo-text">The Souled Store</span>
+      <button id="mobileNavClose"><i class="fa fa-times"></i></button>
+    </div>
+    <ul>
+      <li><a href="#">Men</a></li>
+      <li><a href="#">Women</a></li>
+      <li><a href="#">Kids</a></li>
+      <li><a href="#">Accessories</a></li>
+      <li><a href="#" class="sale-link">SALE 🔥</a></li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <a href="#"><i class="fa fa-user"></i> Login / Sign Up</a>
+      <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
+      <a href="#"><i class="fa fa-headset"></i> Help & Support</a>
+    </div>
+  </nav>
+
+  <!-- HERO SLIDER -->
+  <section class="hero-slider" id="heroSlider">
+    <div class="slide active" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);">
+      <div class="slide-content">
+        <p class="slide-eyebrow">NEW DROP</p>
+        <h1>Anime<br/>Universe<br/><span>Collection</span></h1>
+        <p class="slide-sub">Officially licensed merch from your favourite anime worlds</p>
+        <div class="slide-ctas">
+          <a href="#" class="btn btn-primary">Shop Now</a>
+          <a href="#" class="btn btn-outline">View All</a>
+        </div>
+      </div>
+      <div class="slide-visual anime-visual">
+        <div class="floating-badge">NEW</div>
+        <div class="hero-product-cards">
+          <div class="hero-card" style="background:#e8472a;">
+            <div class="hero-card-label">Dragon<br/>Force</div>
+          </div>
+          <div class="hero-card active-card" style="background:#7c3aed;">
+            <div class="hero-card-label">Soul<br/>Reaper</div>
+          </div>
+          <div class="hero-card" style="background:#0ea5e9;">
+            <div class="hero-card-label">Ninja<br/>Way</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" style="background: linear-gradient(135deg, #1c0a00 0%, #3d1500 40%, #7c2d12 100%);">
+      <div class="slide-content">
+        <p class="slide-eyebrow">MARVEL X SOULED STORE</p>
+        <h1>Heroes<br/>Never<br/><span>Fade</span></h1>
+        <p class="slide-sub">Officially licensed superhero apparel for every fan</p>
+        <div class="slide-ctas">
+          <a href="#" class="btn btn-primary">Explore Now</a>
+          <a href="#" class="btn btn-outline">See All Heroes</a>
+        </div>
+      </div>
+      <div class="slide-visual marvel-visual">
+        <div class="floating-badge" style="background:#e11d48;">HOT</div>
+        <div class="hero-product-cards">
+          <div class="hero-card" style="background:#991b1b;">
+            <div class="hero-card-label">Iron<br/>Man</div>
+          </div>
+          <div class="hero-card active-card" style="background:#1d4ed8;">
+            <div class="hero-card-label">Captain<br/>America</div>
+          </div>
+          <div class="hero-card" style="background:#166534;">
+            <div class="hero-card-label">The<br/>Hulk</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" style="background: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #047857 100%);">
+      <div class="slide-content">
+        <p class="slide-eyebrow">MONSOON SALE</p>
+        <h1>Up To<br/>50%<br/><span>Off</span></h1>
+        <p class="slide-sub">Limited time deals on hoodies, tees and more</p>
+        <div class="slide-ctas">
+          <a href="#" class="btn btn-primary">Shop Sale</a>
+          <a href="#" class="btn btn-outline">All Deals</a>
+        </div>
+      </div>
+      <div class="slide-visual sale-visual">
+        <div class="floating-badge" style="background:#16a34a;">50% OFF</div>
+        <div class="sale-circle">
+          <span>SALE</span>
+          <big>50%</big>
+          <span>OFF</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="slider-arrow prev" id="sliderPrev"><i class="fa fa-chevron-left"></i></button>
+    <button class="slider-arrow next" id="sliderNext"><i class="fa fa-chevron-right"></i></button>
+    <div class="slider-dots" id="sliderDots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </section>
+
+  <!-- CATEGORIES STRIP -->
+  <section class="categories-strip">
+    <div class="container">
+      <div class="cat-grid">
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#fef3c7;color:#d97706;"><i class="fa fa-fire"></i></div>
+          <span>Anime</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#ede9fe;color:#7c3aed;"><i class="fa fa-mask"></i></div>
+          <span>Marvel & DC</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#fce7f3;color:#db2777;"><i class="fa fa-tv"></i></div>
+          <span>TV & Movies</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#dbeafe;color:#2563eb;"><i class="fa fa-music"></i></div>
+          <span>Music</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#dcfce7;color:#16a34a;"><i class="fa fa-leaf"></i></div>
+          <span>Minimalist</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#ffedd5;color:#ea580c;"><i class="fa fa-futbol"></i></div>
+          <span>Sports</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#f0fdf4;color:#15803d;"><i class="fa fa-gamepad"></i></div>
+          <span>Gaming</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#fdf4ff;color:#a21caf;"><i class="fa fa-star"></i></div>
+          <span>Originals</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW ARRIVALS -->
+  <section class="product-section" id="newArrivals">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">New Arrivals</h2>
+          <p class="section-sub">Fresh drops every week</p>
+        </div>
+        <a href="#" class="view-all">View All <i class="fa fa-arrow-right"></i></a>
+      </div>
+
+      <div class="product-tabs">
+        <button class="tab-btn active" data-tab="all">All</button>
+        <button class="tab-btn" data-tab="men">Men</button>
+        <button class="tab-btn" data-tab="women">Women</button>
+        <button class="tab-btn" data-tab="kids">Kids</button>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- Products injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER STRIP -->
+  <section class="banner-strip">
+    <div class="banner-item" style="background: linear-gradient(120deg,#1e1b4b,#312e81);">
+      <div class="banner-content">
+        <p>Anime Drop</p>
+        <h3>Explore 500+<br/>Anime Designs</h3>
+        <a href="#" class="btn btn-light">Shop Anime</a>
+      </div>
+    </div>
+    <div class="banner-item" style="background: linear-gradient(120deg,#450a0a,#7f1d1d);">
+      <div class="banner-content">
+        <p>Marvel X Souled Store</p>
+        <h3>Superhero<br/>Fan Store</h3>
+        <a href="#" class="btn btn-light">Shop Marvel</a>
+      </div>
+    </div>
+    <div class="banner-item" style="background: linear-gradient(120deg,#052e16,#14532d);">
+      <div class="banner-content">
+        <p>Monsoon Sale</p>
+        <h3>Up To<br/>50% Off</h3>
+        <a href="#" class="btn btn-light">Shop Sale</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEST SELLERS -->
+  <section class="product-section" style="background:#f9f9f9;">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Best Sellers</h2>
+          <p class="section-sub">Fan favourites, loved by thousands</p>
+        </div>
+        <a href="#" class="view-all">View All <i class="fa fa-arrow-right"></i></a>
+      </div>
+      <div class="product-grid" id="bestSellerGrid">
+        <!-- injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- USP STRIP -->
+  <section class="usp-strip">
+    <div class="container">
+      <div class="usp-grid">
+        <div class="usp-item">
+          <i class="fa fa-truck-fast"></i>
+          <div>
+            <h4>Free Delivery</h4>
+            <p>On orders above ₹499</p>
+          </div>
+        </div>
+        <div class="usp-item">
+          <i class="fa fa-rotate-left"></i>
+          <div>
+            <h4>Easy Returns</h4>
+            <p>15-day hassle-free returns</p>
+          </div>
+        </div>
+        <div class="usp-item">
+          <i class="fa fa-shield-halved"></i>
+          <div>
+            <h4>100% Authentic</h4>
+            <p>Officially licensed merch</p>
+          </div>
+        </div>
+        <div class="usp-item">
+          <i class="fa fa-lock"></i>
+          <div>
+            <h4>Secure Payment</h4>
+            <p>UPI, Cards, Wallets & more</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED COLLECTIONS -->
+  <section class="featured-collections">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Featured Collections</h2>
+          <p class="section-sub">Curated for every kind of fan</p>
+        </div>
+      </div>
+      <div class="collections-grid">
+        <a href="#" class="collection-card big" style="background:linear-gradient(135deg,#1e1b4b,#4c1d95);">
+          <div class="collection-overlay">
+            <span class="collection-label">Anime</span>
+            <h3>Dragon Ball<br/>Universe</h3>
+            <span class="collection-cta">Shop Now →</span>
+          </div>
+        </a>
+        <a href="#" class="collection-card" style="background:linear-gradient(135deg,#450a0a,#991b1b);">
+          <div class="collection-overlay">
+            <span class="collection-label">Marvel</span>
+            <h3>Avengers<br/>Assemble</h3>
+            <span class="collection-cta">Shop Now →</span>
+          </div>
+        </a>
+        <a href="#" class="collection-card" style="background:linear-gradient(135deg,#0c4a6e,#0369a1);">
+          <div class="collection-overlay">
+            <span class="collection-label">TV & Movies</span>
+            <h3>Breaking<br/>Bad Drop</h3>
+            <span class="collection-cta">Shop Now →</span>
+          </div>
+        </a>
+        <a href="#" class="collection-card" style="background:linear-gradient(135deg,#14532d,#166534);">
+          <div class="collection-overlay">
+            <span class="collection-label">Originals</span>
+            <h3>Souled Store<br/>Classics</h3>
+            <span class="collection-cta">Shop Now →</span>
+          </div>
+        </a>
+        <a href="#" class="collection-card" style="background:linear-gradient(135deg,#713f12,#92400e);">
+          <div class="collection-overlay">
+            <span class="collection-label">Gaming</span>
+            <h3>Level Up<br/>Collection</h3>
+            <span class="collection-cta">Shop Now →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title center">What Our Fans Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Absolutely love the quality! The anime tees are super soft and the print is sharp. Will definitely order again!"</p>
+          <div class="tester-info">
+            <div class="tester-avatar" style="background:#7c3aed;">A</div>
+            <div>
+              <strong>Arjun M.</strong>
+              <span>Mumbai</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Got the Marvel hoodie as a gift and everyone keeps asking where I got it from. Fast delivery too!"</p>
+          <div class="tester-info">
+            <div class="tester-avatar" style="background:#e11d48;">P</div>
+            <div>
+              <strong>Priya K.</strong>
+              <span>Bangalore</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★☆</div>
+          <p>"Best fan merch store in India. The oversized tees fit perfectly and the designs are fire. 10/10 recommend."</p>
+          <div class="tester-info">
+            <div class="tester-avatar" style="background:#0369a1;">R</div>
+            <div>
+              <strong>Rahul S.</strong>
+              <span>Delhi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-inner">
+        <div class="newsletter-text">
+          <h2>Stay in the Loop</h2>
+          <p>New drops, exclusive deals and fan news — straight to your inbox</p>
+        </div>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Enter your email address" id="newsletterEmail"/>
+          <button class="btn btn-primary" id="newsletterBtn">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-text footer-logo">The Souled Store</div>
+          <p>India's favourite fan merch destination. Officially licensed. Passionately made.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#">Men</a></li>
+            <li><a href="#">Women</a></li>
+            <li><a href="#">Kids</a></li>
+            <li><a href="#">Accessories</a></li>
+            <li><a href="#">Sale</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Care</h4>
+          <ul>
+            <li><a href="#">Track Order</a></li>
+            <li><a href="#">Returns & Exchange</a></li>
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 The Souled Store. All rights reserved.</p>
+        <div class="payment-icons">
+          <span>VISA</span><span>MC</span><span>UPI</span><span>Paytm</span><span>GPay</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Your Bag (<span id="cartItemCount">0</span>)</h3>
+      <button id="cartClose"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty" id="cartEmpty">
+        <i class="fa fa-shopping-bag"></i>
+        <p>Your bag is empty</p>
+        <a href="#" class="btn btn-primary">Start Shopping</a>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cartTotal">₹0</strong>
+      </div>
+      <button class="btn btn-primary full-width">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

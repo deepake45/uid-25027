@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Souled Store</title>
+  <style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito', sans-serif; color: #1a1a1a; background: #fff; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  --red: #e53935;
+  --red-dark: #b71c1c;
+  --black: #1a1a1a;
+  --white: #ffffff;
+  --gray-100: #f9f9f9;
+  --gray-200: #f0f0f0;
+  --gray-400: #999;
+  --gray-600: #555;
+  --header-height: 64px;
+  --topbar-height: 36px;
+  --transition: 0.25s ease;
+  --shadow: 0 2px 16px rgba(0,0,0,0.10);
+  --shadow-hover: 0 6px 28px rgba(0,0,0,0.16);
+  --radius: 10px;
+}
+
+/* ===== CONTAINER ===== */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+/* ===== TOP BAR ===== */
+.topbar {
+  background: var(--black);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+  height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+}
+.topbar marquee { color: #ffd700; }
+
+/* ===== HEADER ===== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--white);
+  border-bottom: 2px solid var(--black);
+  transition: box-shadow var(--transition);
+}
+.header.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+.header-inner {
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.header-left { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.hamburger { display: none; font-size: 20px; color: var(--black); }
+.logo-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  white-space: nowrap;
+}
+.logo-text .red { color: var(--red); }
+
+/* ===== MAIN NAV ===== */
+.main-nav { flex: 1; display: flex; justify-content: center; }
+.main-nav > ul { display: flex; gap: 4px; align-items: center; }
+.nav-item > a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 14px;
+  font-size: 13.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--black);
+  border-radius: 6px;
+  transition: background var(--transition), color var(--transition);
+}
+.nav-item > a:hover { background: var(--gray-100); color: var(--red); }
+.nav-item > a .fa-chevron-down { font-size: 10px; transition: transform var(--transition); }
+.nav-item:hover > a .fa-chevron-down { transform: rotate(180deg); }
+.sale-link { color: var(--red) !important; }
+
+/* MEGA DROPDOWN */
+.mega-dropdown {
+  position: absolute;
+  top: calc(var(--header-height) + 2px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--white);
+  border: 2px solid var(--black);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  display: none;
+  gap: 40px;
+  min-width: 480px;
+  box-shadow: var(--shadow-hover);
+  opacity: 0;
+  transition: opacity var(--transition), transform var(--transition);
+}
+.has-dropdown { position: relative; }
+.has-dropdown:hover .mega-dropdown {
+  display: flex;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  animation: dropIn 0.2s ease forwards;
+}
+@keyframes dropIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.mega-col h4 {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-400);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.mega-col ul { display: flex; flex-direction: column; gap: 8px; }
+.mega-col ul li a {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--black);
+  transition: color var(--transition);
+}
+.mega-col ul li a:hover { color: var(--red); }
+
+/* ===== HEADER RIGHT ===== */
+.header-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.icon-btn {
+  position: relative;
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  color: var(--black);
+  transition: background var(--transition), color var(--transition);
+}
+.icon-btn:hover { background: var(--gray-100); color: var(--red); }
+.badge {
+  position: absolute;
+  top: 3px; right: 3px;
+  background: var(--red);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 800;
+  width: 17px; height: 17px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+.search-box {
+  display: none;
+  position: absolute;
+  top: calc(var(--header-height) + 2px);
+  left: 0; right: 0;
+  background: var(--white);
+  border-bottom: 2px solid var(--black);
+  padding: 12px 24px;
+  z-index: 999;
+  gap: 12px;
+  align-items: center;
+}
+.search-box.active { display: flex; }
+.search-box input {
+  flex: 1;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  border: 2px solid var(--black);
+  border-radius: 8px;
+  padding: 10px 16px;
+  outline: none;
+}
+.search-box input:focus { border-color: var(--red); }
+#searchClose { font-size: 18px; color: var(--gray-600); padding: 8px; }
+
+/* ===== MOBILE NAV ===== */
+.mobile-nav-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1100;
+  display: none;
+}
+.mobile-nav-overlay.active { display: block; }
+.mobile-nav {
+  position: fixed;
+  top: 0; left: -100%;
+  width: 300px; height: 100%;
+  background: var(--white);
+  z-index: 1200;
+  transition: left 0.3s ease;
+  display: flex; flex-direction: column;
+  border-right: 2px solid var(--black);
+}
+.mobile-nav.active { left: 0; }
+.mobile-nav-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 2px solid var(--black);
+}
+.mobile-nav-header .logo-text { font-size: 22px; }
+#mobileNavClose { font-size: 20px; }
+.mobile-nav > ul { flex: 1; padding: 12px 0; }
+.mobile-nav > ul li a {
+  display: block;
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--gray-200);
+  transition: background var(--transition), color var(--transition);
+}
+.mobile-nav > ul li a:hover { background: var(--gray-100); color: var(--red); }
+.mobile-nav-footer {
+  padding: 20px;
+  border-top: 2px solid var(--black);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.mobile-nav-footer a {
+  font-size: 13.5px;
+  font-weight: 700;
+  display: flex; align-items: center; gap: 10px;
+  color: var(--gray-600);
+}
+.mobile-nav-footer a:hover { color: var(--red); }
+
+/* ===== REAL IMAGE SUPPORT ===== */
+.product-img-real {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.product-card:hover .product-img-real { transform: scale(1.05); }
+
+.collection-card { overflow: hidden; }
+.collection-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  transition: transform 0.4s ease;
+}
+.collection-card:hover .collection-bg { transform: scale(1.06); }
+.collection-overlay { position: relative; z-index: 2; }
+
+.banner-item { position: relative; overflow: hidden; }
+.banner-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.45;
+}
+.banner-content { position: relative; z-index: 2; }
+
+.hero-card { position: relative; overflow: hidden; }
+.hero-card-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  border-radius: 9px;
+}
+.hero-card-label { position: relative; z-index: 2; }
+
+/* ===== HERO SLIDER ===== */
+.hero-slider {
+  position: relative;
+  overflow: hidden;
+  height: 520px;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 5%;
+  gap: 40px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.slide.active { opacity: 1; pointer-events: all; }
+.slide-content { flex: 1; color: var(--white); z-index: 2; }
+.slide-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffd700;
+  margin-bottom: 12px;
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.slide-content h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 8vw, 100px);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+.slide-content h1 span { color: #ffd700; }
+.slide-sub { font-size: 15px; font-weight: 600; opacity: 0.85; margin-bottom: 28px; max-width: 380px; }
+.slide-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 12px 26px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 8px;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.btn-primary { background: var(--red); color: var(--white); border: 2px solid var(--red); }
+.btn-primary:hover { background: var(--red-dark); border-color: var(--red-dark); transform: translateY(-1px); }
+.btn-outline { background: transparent; color: var(--white); border: 2px solid var(--white); }
+.btn-outline:hover { background: var(--white); color: var(--black); }
+.btn-light { background: var(--white); color: var(--black); border: 2px solid var(--white); font-size: 12.5px; padding: 10px 20px; }
+.btn-light:hover { background: transparent; color: var(--white); }
+.full-width { width: 100%; justify-content: center; }
+
+/* SLIDE VISUAL */
+.slide-visual {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+}
+.floating-badge {
+  position: absolute;
+  top: 40px; right: 20px;
+  background: #ffd700;
+  color: var(--black);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.08em;
+  z-index: 3;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+.hero-product-cards {
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+  padding: 40px 20px;
+}
+.hero-card {
+  width: 100px; height: 130px;
+  border-radius: 12px;
+  display: flex; align-items: flex-end;
+  padding: 12px;
+  border: 3px solid rgba(255,255,255,0.2);
+  transition: transform var(--transition);
+  transform: rotate(-4deg);
+}
+.hero-card:nth-child(2) { transform: rotate(0deg) translateY(-14px); }
+.hero-card:nth-child(3) { transform: rotate(4deg); }
+.active-card { border-color: rgba(255,255,255,0.7) !important; }
+.hero-card-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  color: var(--white);
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+}
+.sale-circle {
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: 4px dashed rgba(255,255,255,0.5);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: var(--white);
+  animation: spin-slow 12s linear infinite;
+}
+.sale-circle span { font-size: 14px; font-weight: 800; letter-spacing: 0.1em; }
+.sale-circle big { font-family: 'Bebas Neue', sans-serif; font-size: 64px; line-height: 1; }
+@keyframes spin-slow { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+
+/* SLIDER CONTROLS */
+.slider-arrow {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 50%;
+  color: var(--white);
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10;
+  transition: background var(--transition);
+  backdrop-filter: blur(4px);
+}
+.slider-arrow:hover { background: rgba(255,255,255,0.3); }
+.slider-arrow.prev { left: 20px; }
+.slider-arrow.next { right: 20px; }
+.slider-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 8px;
+  z-index: 10;
+}
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.dot.active { background: var(--white); width: 24px; border-radius: 4px; }
+
+/* ===== CATEGORIES STRIP ===== */
+.categories-strip { padding: 32px 0; border-bottom: 1px solid var(--gray-200); }
+.cat-grid {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.cat-item {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  transition: background var(--transition), transform var(--transition);
+  cursor: pointer;
+  min-width: 90px;
+}
+.cat-item:hover { background: var(--gray-100); transform: translateY(-3px); }
+.cat-icon {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+.cat-item span {
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--black);
+}
+
+/* ===== PRODUCT SECTION ===== */
+.product-section { padding: 56px 0; }
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 38px;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  line-height: 1;
+}
+.section-title.center { text-align: center; }
+.section-sub { font-size: 13.5px; color: var(--gray-600); font-weight: 600; margin-top: 4px; }
+.view-all {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+  margin-top: 6px;
+  transition: gap var(--transition);
+}
+.view-all:hover { gap: 10px; }
+
+/* PRODUCT TABS */
+.product-tabs { display: flex; gap: 6px; margin-bottom: 28px; }
+.tab-btn {
+  padding: 8px 20px;
+  border: 2px solid var(--black);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all var(--transition);
+  color: var(--black);
+}
+.tab-btn:hover, .tab-btn.active {
+  background: var(--black);
+  color: var(--white);
+}
+
+/* PRODUCT GRID */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* PRODUCT CARD */
+.product-card {
+  border-radius: var(--radius);
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  overflow: hidden;
+  transition: box-shadow var(--transition), transform var(--transition);
+  cursor: pointer;
+  position: relative;
+}
+.product-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+}
+.product-card:hover .product-actions { opacity: 1; transform: translateY(0); }
+.product-image-wrap {
+  position: relative;
+  padding-top: 110%;
+  background: var(--gray-100);
+  overflow: hidden;
+}
+.product-image-placeholder {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+.product-image-placeholder .pimg-icon {
+  font-size: 42px;
+  opacity: 0.25;
+}
+.product-image-placeholder .pimg-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  opacity: 0.5;
+  text-align: center;
+  padding: 0 12px;
+}
+.product-badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: var(--red);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  z-index: 2;
+}
+.product-badge.new { background: #16a34a; }
+.product-badge.hot { background: #f59e0b; color: var(--black); }
+.product-wishlist {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 34px; height: 34px;
+  background: var(--white);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  color: var(--gray-400);
+  box-shadow: var(--shadow);
+  z-index: 2;
+  transition: color var(--transition), transform var(--transition);
+}
+.product-wishlist:hover, .product-wishlist.active { color: var(--red); transform: scale(1.1); }
+.product-actions {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: var(--black);
+  color: var(--white);
+  text-align: center;
+  padding: 12px;
+  font-size: 12.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--transition), transform var(--transition);
+}
+.product-actions:hover { background: var(--red); }
+.product-info { padding: 12px 14px 14px; }
+.product-theme {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-400);
+  margin-bottom: 4px;
+}
+.product-name {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--black);
+  margin-bottom: 6px;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.product-price { display: flex; align-items: center; gap: 8px; }
+.price-current {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--black);
+}
+.price-original {
+  font-size: 13px;
+  color: var(--gray-400);
+  text-decoration: line-through;
+  font-weight: 600;
+}
+.price-off {
+  font-size: 11px;
+  font-weight: 800;
+  color: #16a34a;
+  background: #dcfce7;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.product-sizes { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
+.size-chip {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 7px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 4px;
+  color: var(--gray-600);
+  transition: all var(--transition);
+}
+.size-chip:hover { border-color: var(--black); color: var(--black); }
+
+/* ===== BANNER STRIP ===== */
+.banner-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.banner-item { padding: 48px 40px; position: relative; overflow: hidden; }
+.banner-item::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.2);
+}
+.banner-content {
+  position: relative; z-index: 2;
+  color: var(--white);
+}
+.banner-content p {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+.banner-content h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  line-height: 1.05;
+  margin-bottom: 20px;
+}
+
+/* ===== USP STRIP ===== */
+.usp-strip { padding: 40px 0; background: var(--black); }
+.usp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.usp-item {
+  display: flex; align-items: center; gap: 16px;
+  color: var(--white);
+}
+.usp-item > i { font-size: 28px; color: #ffd700; flex-shrink: 0; }
+.usp-item h4 { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+.usp-item p { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 600; }
+
+/* ===== FEATURED COLLECTIONS ===== */
+.featured-collections { padding: 56px 0; }
+.collections-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 260px 260px;
+  gap: 14px;
+}
+.collection-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  display: block;
+  transition: transform var(--transition);
+}
+.collection-card:hover { transform: scale(1.02); }
+.collection-card.big { grid-row: 1 / 3; }
+.collection-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%);
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  color: var(--white);
+}
+.collection-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffd700;
+  margin-bottom: 6px;
+}
+.collection-overlay h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+.collection-card.big .collection-overlay h3 { font-size: 44px; }
+.collection-cta {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+  transition: opacity var(--transition);
+}
+.collection-card:hover .collection-cta { opacity: 1; }
+
+/* ===== TESTIMONIALS ===== */
+.testimonials { padding: 56px 0; background: var(--gray-100); }
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+.testimonial-card {
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: box-shadow var(--transition);
+}
+.testimonial-card:hover { box-shadow: var(--shadow-hover); }
+.stars { color: #f59e0b; font-size: 18px; margin-bottom: 12px; letter-spacing: 2px; }
+.testimonial-card p { font-size: 14px; font-weight: 600; color: var(--gray-600); line-height: 1.6; margin-bottom: 16px; }
+.tester-info { display: flex; align-items: center; gap: 12px; }
+.tester-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.tester-info strong { display: block; font-size: 13.5px; font-weight: 800; }
+.tester-info span { font-size: 12px; color: var(--gray-400); font-weight: 600; }
+
+/* ===== NEWSLETTER ===== */
+.newsletter { padding: 60px 0; background: var(--black); }
+.newsletter-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.newsletter-text h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.newsletter-text p { font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 600; }
+.newsletter-form { display: flex; gap: 10px; flex: 1; max-width: 480px; }
+.newsletter-form input {
+  flex: 1;
+  padding: 12px 18px;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: var(--white);
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.newsletter-form input::placeholder { color: rgba(255,255,255,0.4); }
+.newsletter-form input:focus { border-color: var(--red); }
+
+/* ===== FOOTER ===== */
+.footer { background: #111; padding: 56px 0 0; color: rgba(255,255,255,0.7); }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.footer-logo { color: var(--white) !important; font-size: 24px !important; margin-bottom: 14px; }
+.footer-brand p { font-size: 13.5px; line-height: 1.6; max-width: 280px; margin-bottom: 20px; }
+.social-icons { display: flex; gap: 12px; }
+.social-icons a {
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  color: rgba(255,255,255,0.6);
+  transition: background var(--transition), color var(--transition);
+}
+.social-icons a:hover { background: var(--red); color: var(--white); }
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.55);
+  transition: color var(--transition);
+}
+.footer-col ul li a:hover { color: var(--white); }
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.35);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.payment-icons { display: flex; gap: 8px; }
+.payment-icons span {
+  background: rgba(255,255,255,0.1);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ===== CART DRAWER ===== */
+.cart-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1400;
+  display: none;
+  backdrop-filter: blur(2px);
+}
+.cart-overlay.active { display: block; }
+.cart-drawer {
+  position: fixed;
+  top: 0; right: -420px;
+  width: 420px; height: 100%;
+  background: var(--white);
+  z-index: 1500;
+  display: flex; flex-direction: column;
+  transition: right 0.3s ease;
+  border-left: 2px solid var(--black);
+}
+.cart-drawer.active { right: 0; }
+.cart-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 2px solid var(--black);
+}
+.cart-header h3 { font-size: 18px; font-weight: 800; }
+#cartClose { font-size: 20px; color: var(--gray-600); }
+#cartClose:hover { color: var(--red); }
+.cart-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+.cart-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 14px; color: var(--gray-400); }
+.cart-empty i { font-size: 56px; }
+.cart-empty p { font-size: 16px; font-weight: 700; }
+.cart-items { display: flex; flex-direction: column; gap: 16px; }
+.cart-item {
+  display: flex; gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.cart-item-img {
+  width: 80px; height: 90px;
+  border-radius: 8px;
+  background: var(--gray-100);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+  border: 1.5px solid var(--gray-200);
+}
+.cart-item-details { flex: 1; }
+.cart-item-name { font-size: 13.5px; font-weight: 800; margin-bottom: 4px; }
+.cart-item-meta { font-size: 12px; color: var(--gray-400); font-weight: 600; margin-bottom: 8px; }
+.cart-item-price { font-size: 15px; font-weight: 800; color: var(--red); }
+.cart-item-remove { font-size: 12px; color: var(--gray-400); font-weight: 700; cursor: pointer; }
+.cart-item-remove:hover { color: var(--red); }
+.cart-footer {
+  padding: 20px 24px;
+  border-top: 2px solid var(--black);
+}
+.cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.cart-total span { font-size: 15px; font-weight: 700; color: var(--gray-600); }
+.cart-total strong { font-size: 22px; font-weight: 800; }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 30px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--black);
+  color: var(--white);
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 13.5px;
+  font-weight: 700;
+  box-shadow: var(--shadow-hover);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1100px) {
+  .product-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .main-nav { display: none; }
+  .hamburger { display: flex; }
+  .hero-slider { height: 420px; }
+  .slide-content h1 { font-size: 56px; }
+  .slide-visual { display: none; }
+  .banner-strip { grid-template-columns: 1fr; }
+  .usp-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .collections-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .collection-card.big { grid-column: 1 / 3; grid-row: auto; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .hero-slider { height: 360px; }
+  .slide { padding: 0 20px; }
+  .slide-content h1 { font-size: 44px; }
+  .slide-ctas { gap: 10px; }
+  .cat-item span { font-size: 11px; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .newsletter-inner { flex-direction: column; }
+  .newsletter-form { flex-direction: column; width: 100%; max-width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .cart-drawer { width: 100%; right: -100%; }
+  .collections-grid { grid-template-columns: 1fr; }
+  .collection-card.big { grid-column: auto; }
+  .usp-grid { grid-template-columns: 1fr; }
+}
+
+</style>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <marquee behavior="scroll" direction="left" scrollamount="4">
+      🚚 FREE DELIVERY on orders above ₹499 &nbsp;|&nbsp; 🎉 NEW ARRIVALS: Anime, Movies & TV drops &nbsp;|&nbsp; 🔥 USE CODE: INKED10 for 10% OFF &nbsp;|&nbsp; 💥 OFFICIAL LICENSED MERCHANDISE
+    </marquee>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button class="hamburger" id="hamburgerBtn"><i class="fa fa-bars"></i></button>
+        <a href="#" class="logo">
+          <span class="logo-text">The Souled Store</span>
+        </a>
+      </div>
+
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li class="nav-item has-dropdown">
+            <a href="#">Men <i class="fa fa-chevron-down"></i></a>
+            <div class="mega-dropdown">
+              <div class="mega-col">
+                <h4>Categories</h4>
+                <ul>
+                  <li><a href="#">T-Shirts</a></li>
+                  <li><a href="#">Oversized Tees</a></li>
+                  <li><a href="#">Hoodies & Sweatshirts</a></li>
+                  <li><a href="#">Joggers</a></li>
+                  <li><a href="#">Shorts</a></li>
+                  <li><a href="#">Jackets</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <h4>By Theme</h4>
+                <ul>
+                  <li><a href="#">Anime</a></li>
+                  <li><a href="#">Marvel & DC</a></li>
+                  <li><a href="#">TV & Movies</a></li>
+                  <li><a href="#">Music</a></li>
+                  <li><a href="#">Minimalist</a></li>
+                  <li><a href="#">Sports</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <h4>Featured</h4>
+                <ul>
+                  <li><a href="#">New Arrivals</a></li>
+                  <li><a href="#">Best Sellers</a></li>
+                  <li><a href="#">Limited Edition</a></li>
+                  <li><a href="#">Sale</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="#">Women <i class="fa fa-chevron-down"></i></a>
+            <div class="mega-dropdown">
+              <div class="mega-col">
+                <h4>Categories</h4>
+                <ul>
+                  <li><a href="#">T-Shirts</a></li>
+                  <li><a href="#">Crop Tops</a></li>
+                  <li><a href="#">Hoodies</a></li>
+                  <li><a href="#">Dresses</a></li>
+                  <li><a href="#">Joggers</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <h4>By Theme</h4>
+                <ul>
+                  <li><a href="#">Anime</a></li>
+                  <li><a href="#">Pop Culture</a></li>
+                  <li><a href="#">Pastel Drops</a></li>
+                  <li><a href="#">Minimalist</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <h4>Featured</h4>
+                <ul>
+                  <li><a href="#">New Arrivals</a></li>
+                  <li><a href="#">Best Sellers</a></li>
+                  <li><a href="#">Sale</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="#">Kids <i class="fa fa-chevron-down"></i></a>
+            <div class="mega-dropdown">
+              <div class="mega-col">
+                <h4>Categories</h4>
+                <ul>
+                  <li><a href="#">T-Shirts</a></li>
+                  <li><a href="#">Sets</a></li>
+                  <li><a href="#">Hoodies</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="#">Accessories <i class="fa fa-chevron-down"></i></a>
+            <div class="mega-dropdown">
+              <div class="mega-col">
+                <h4>Products</h4>
+                <ul>
+                  <li><a href="#">Phone Cases</a></li>
+                  <li><a href="#">Mugs</a></li>
+                  <li><a href="#">Bags & Totes</a></li>
+                  <li><a href="#">Caps & Hats</a></li>
+                  <li><a href="#">Socks</a></li>
+                  <li><a href="#">Stickers</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item"><a href="#" class="sale-link">SALE 🔥</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-right">
+        <div class="search-box" id="searchBox">
+          <input type="text" placeholder="Search for products, themes..." id="searchInput"/>
+          <button id="searchClose"><i class="fa fa-times"></i></button>
+        </div>
+        <button class="icon-btn" id="searchToggle"><i class="fa fa-search"></i></button>
+        <button class="icon-btn"><i class="fa fa-user"></i></button>
+        <button class="icon-btn" id="wishlistBtn"><i class="fa fa-heart"></i><span class="badge" id="wishlistCount">0</span></button>
+        <button class="icon-btn" id="cartBtn"><i class="fa fa-shopping-bag"></i><span class="badge" id="cartCount">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+  <nav class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-header">
+      <span class="logo-text">The Souled Store</span>
+      <button id="mobileNavClose"><i class="fa fa-times"></i></button>
+    </div>
+    <ul>
+      <li><a href="#newArrivals">Men</a></li>
+      <li><a href="#newArrivals">Women</a></li>
+      <li><a href="#newArrivals">Kids</a></li>
+      <li><a href="#newArrivals">Accessories</a></li>
+      <li><a href="#bestSellers" class="sale-link">SALE 🔥</a></li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <a href="#"><i class="fa fa-user"></i> Login / Sign Up</a>
+      <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
+      <a href="#"><i class="fa fa-headset"></i> Help & Support</a>
+    </div>
+  </nav>
+
+  <!-- HERO SLIDER -->
+  <section class="hero-slider" id="heroSlider">
+    <div class="slide active" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);">
+      <div class="slide-content">
+        <p class="slide-eyebrow">NEW DROP</p>
+        <h1>Anime<br/>Universe<br/><span>Collection</span></h1>
+        <p class="slide-sub">Officially licensed merch from your favourite anime worlds</p>
+        <div class="slide-ctas">
+          <a href="#newArrivals" class="btn btn-primary">Shop Now</a>
+          <a href="#newArrivals" class="btn btn-outline">View All</a>
+        </div>
+      </div>
+      <div class="slide-visual anime-visual">
+        <div class="floating-badge">NEW</div>
+        <div class="hero-product-cards">
+          <div class="hero-card" style="background:#e8472a;">
+            <img class="hero-card-bg" src="https://images.unsplash.com/photo-1618519764620-7403abdbdfe9?w=200&q=80" alt="Anime Tee"/>
+            <div class="hero-card-label">Dragon<br/>Force</div>
+          </div>
+          <div class="hero-card active-card" style="background:#7c3aed;">
+            <img class="hero-card-bg" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&q=80" alt="Anime Hoodie"/>
+            <div class="hero-card-label">Soul<br/>Reaper</div>
+          </div>
+          <div class="hero-card" style="background:#0ea5e9;">
+            <img class="hero-card-bg" src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=200&q=80" alt="Anime Graphic Tee"/>
+            <div class="hero-card-label">Ninja<br/>Way</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" style="background: linear-gradient(135deg, #1c0a00 0%, #3d1500 40%, #7c2d12 100%);">
+      <div class="slide-content">
+        <p class="slide-eyebrow">MARVEL X SOULED STORE</p>
+        <h1>Heroes<br/>Never<br/><span>Fade</span></h1>
+        <p class="slide-sub">Officially licensed superhero apparel for every fan</p>
+        <div class="slide-ctas">
+          <a href="#newArrivals" class="btn btn-primary">Explore Now</a>
+          <a href="#newArrivals" class="btn btn-outline">See All Heroes</a>
+        </div>
+      </div>
+      <div class="slide-visual marvel-visual">
+        <div class="floating-badge" style="background:#e11d48;">HOT</div>
+        <div class="hero-product-cards">
+          <div class="hero-card" style="background:#991b1b;">
+            <img class="hero-card-bg" src="https://images.unsplash.com/photo-1593784991095-a205069470b6?w=200&q=80" alt="Superhero Tee"/>
+            <div class="hero-card-label">Iron<br/>Man</div>
+          </div>
+          <div class="hero-card active-card" style="background:#1d4ed8;">
+            <img class="hero-card-bg" src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=200&q=80" alt="Captain America Tee"/>
+            <div class="hero-card-label">Captain<br/>America</div>
+          </div>
+          <div class="hero-card" style="background:#166534;">
+            <img class="hero-card-bg" src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=200&q=80" alt="Hulk Hoodie"/>
+            <div class="hero-card-label">The<br/>Hulk</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" style="background: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #047857 100%);">
+      <div class="slide-content">
+        <p class="slide-eyebrow">MONSOON SALE</p>
+        <h1>Up To<br/>50%<br/><span>Off</span></h1>
+        <p class="slide-sub">Limited time deals on hoodies, tees and more</p>
+        <div class="slide-ctas">
+          <a href="#bestSellers" class="btn btn-primary">Shop Sale</a>
+          <a href="#newArrivals" class="btn btn-outline">All Deals</a>
+        </div>
+      </div>
+      <div class="slide-visual sale-visual">
+        <div class="floating-badge" style="background:#16a34a;">50% OFF</div>
+        <div class="sale-circle">
+          <span>SALE</span>
+          <big>50%</big>
+          <span>OFF</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="slider-arrow prev" id="sliderPrev"><i class="fa fa-chevron-left"></i></button>
+    <button class="slider-arrow next" id="sliderNext"><i class="fa fa-chevron-right"></i></button>
+    <div class="slider-dots" id="sliderDots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </section>
+
+  <!-- CATEGORIES STRIP -->
+  <section class="categories-strip">
+    <div class="container">
+      <div class="cat-grid">
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#fef3c7;color:#d97706;"><i class="fa fa-fire"></i></div>
+          <span>Anime</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#ede9fe;color:#7c3aed;"><i class="fa fa-mask"></i></div>
+          <span>Marvel & DC</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#fce7f3;color:#db2777;"><i class="fa fa-tv"></i></div>
+          <span>TV & Movies</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#dbeafe;color:#2563eb;"><i class="fa fa-music"></i></div>
+          <span>Music</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#dcfce7;color:#16a34a;"><i class="fa fa-leaf"></i></div>
+          <span>Minimalist</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#ffedd5;color:#ea580c;"><i class="fa fa-futbol"></i></div>
+          <span>Sports</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#f0fdf4;color:#15803d;"><i class="fa fa-gamepad"></i></div>
+          <span>Gaming</span>
+        </a>
+        <a href="#" class="cat-item">
+          <div class="cat-icon" style="background:#fdf4ff;color:#a21caf;"><i class="fa fa-star"></i></div>
+          <span>Originals</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW ARRIVALS -->
+  <section class="product-section" id="newArrivals">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">New Arrivals</h2>
+          <p class="section-sub">Fresh drops every week</p>
+        </div>
+        <a href="#newArrivals" class="view-all">View All <i class="fa fa-arrow-right"></i></a>
+      </div>
+
+      <div class="product-tabs">
+        <button class="tab-btn active" data-tab="all">All</button>
+        <button class="tab-btn" data-tab="men">Men</button>
+        <button class="tab-btn" data-tab="women">Women</button>
+        <button class="tab-btn" data-tab="kids">Kids</button>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- Products injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER STRIP -->
+  <section class="banner-strip">
+    <div class="banner-item" style="background: linear-gradient(120deg,#1e1b4b,#312e81);">
+      <img class="banner-bg" src="https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?w=600&q=80" alt="Anime"/>
+      <div class="banner-content">
+        <p>Anime Drop</p>
+        <h3>Explore 500+<br/>Anime Designs</h3>
+        <a href="#newArrivals" class="btn btn-light">Shop Anime</a>
+      </div>
+    </div>
+    <div class="banner-item" style="background: linear-gradient(120deg,#450a0a,#7f1d1d);">
+      <img class="banner-bg" src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=600&q=80" alt="Marvel"/>
+      <div class="banner-content">
+        <p>Marvel X Souled Store</p>
+        <h3>Superhero<br/>Fan Store</h3>
+        <a href="#newArrivals" class="btn btn-light">Shop Marvel</a>
+      </div>
+    </div>
+    <div class="banner-item" style="background: linear-gradient(120deg,#052e16,#14532d);">
+      <img class="banner-bg" src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80" alt="Sale"/>
+      <div class="banner-content">
+        <p>Monsoon Sale</p>
+        <h3>Up To<br/>50% Off</h3>
+        <a href="#bestSellers" class="btn btn-light">Shop Sale</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEST SELLERS -->
+  <section class="product-section" id="bestSellers" style="background:#f9f9f9;">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Best Sellers</h2>
+          <p class="section-sub">Fan favourites, loved by thousands</p>
+        </div>
+        <a href="#newArrivals" class="view-all">View All <i class="fa fa-arrow-right"></i></a>
+      </div>
+      <div class="product-grid" id="bestSellerGrid">
+        <!-- injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- USP STRIP -->
+  <section class="usp-strip">
+    <div class="container">
+      <div class="usp-grid">
+        <div class="usp-item">
+          <i class="fa fa-truck-fast"></i>
+          <div>
+            <h4>Free Delivery</h4>
+            <p>On orders above ₹499</p>
+          </div>
+        </div>
+        <div class="usp-item">
+          <i class="fa fa-rotate-left"></i>
+          <div>
+            <h4>Easy Returns</h4>
+            <p>15-day hassle-free returns</p>
+          </div>
+        </div>
+        <div class="usp-item">
+          <i class="fa fa-shield-halved"></i>
+          <div>
+            <h4>100% Authentic</h4>
+            <p>Officially licensed merch</p>
+          </div>
+        </div>
+        <div class="usp-item">
+          <i class="fa fa-lock"></i>
+          <div>
+            <h4>Secure Payment</h4>
+            <p>UPI, Cards, Wallets & more</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED COLLECTIONS -->
+  <section class="featured-collections">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Featured Collections</h2>
+          <p class="section-sub">Curated for every kind of fan</p>
+        </div>
+      </div>
+      <div class="collections-grid">
+        <a href="#newArrivals" class="collection-card big" style="background:linear-gradient(135deg,#1e1b4b,#4c1d95);">
+          <img class="collection-bg" src="https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?w=800&q=80" alt="Dragon Ball Universe"/>
+          <div class="collection-overlay">
+            <span class="collection-label">Anime</span>
+            <h3>Dragon Ball<br/>Universe</h3>
+            <span class="collection-cta">Shop Now →</span>
+          </div>
+        </a>
+        <a href="#newArrivals" class="collection-card" style="background:linear-gradient(135deg,#450a0a,#991b1b);">
+          <img class="collection-bg" src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=600&q=80" alt="Avengers"/>
+          <div class="collection-overlay">
+            <span class="collection-label">Marvel</span>
+            <h3>Avengers<br/>Assemble</h3>
+            <span class="collection-cta">Shop Now →</span>
+          </div>
+        </a>
+        <a href="#newArrivals" class="collection-card" style="background:linear-gradient(135deg,#0c4a6e,#0369a1);">
+          <img class="collection-bg" src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80" alt="TV and Movies"/>
+          <div class="collection-overlay">
+            <span class="collection-label">TV & Movies</span>
+            <h3>Breaking<br/>Bad Drop</h3>
+            <span class="collection-cta">Shop Now →</span>
+          </div>
+        </a>
+        <a href="#newArrivals" class="collection-card" style="background:linear-gradient(135deg,#14532d,#166534);">
+          <img class="collection-bg" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&q=80" alt="Originals"/>
+          <div class="collection-overlay">
+            <span class="collection-label">Originals</span>
+            <h3>Souled Store<br/>Classics</h3>
+            <span class="collection-cta">Shop Now →</span>
+          </div>
+        </a>
+        <a href="#newArrivals" class="collection-card" style="background:linear-gradient(135deg,#713f12,#92400e);">
+          <img class="collection-bg" src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&q=80" alt="Gaming"/>
+          <div class="collection-overlay">
+            <span class="collection-label">Gaming</span>
+            <h3>Level Up<br/>Collection</h3>
+            <span class="collection-cta">Shop Now →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title center">What Our Fans Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Absolutely love the quality! The anime tees are super soft and the print is sharp. Will definitely order again!"</p>
+          <div class="tester-info">
+            <div class="tester-avatar" style="background:#7c3aed;">A</div>
+            <div>
+              <strong>Arjun M.</strong>
+              <span>Mumbai</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Got the Marvel hoodie as a gift and everyone keeps asking where I got it from. Fast delivery too!"</p>
+          <div class="tester-info">
+            <div class="tester-avatar" style="background:#e11d48;">P</div>
+            <div>
+              <strong>Priya K.</strong>
+              <span>Bangalore</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★☆</div>
+          <p>"Best fan merch store in India. The oversized tees fit perfectly and the designs are fire. 10/10 recommend."</p>
+          <div class="tester-info">
+            <div class="tester-avatar" style="background:#0369a1;">R</div>
+            <div>
+              <strong>Rahul S.</strong>
+              <span>Delhi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-inner">
+        <div class="newsletter-text">
+          <h2>Stay in the Loop</h2>
+          <p>New drops, exclusive deals and fan news — straight to your inbox</p>
+        </div>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Enter your email address" id="newsletterEmail"/>
+          <button class="btn btn-primary" id="newsletterBtn">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-text footer-logo">The Souled Store</div>
+          <p>India's favourite fan merch destination. Officially licensed. Passionately made.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#newArrivals">Men</a></li>
+            <li><a href="#newArrivals">Women</a></li>
+            <li><a href="#newArrivals">Kids</a></li>
+            <li><a href="#newArrivals">Accessories</a></li>
+            <li><a href="#">Sale</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Care</h4>
+          <ul>
+            <li><a href="#">Track Order</a></li>
+            <li><a href="#">Returns & Exchange</a></li>
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 The Souled Store. All rights reserved.</p>
+        <div class="payment-icons">
+          <span>VISA</span><span>MC</span><span>UPI</span><span>Paytm</span><span>GPay</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Your Bag (<span id="cartItemCount">0</span>)</h3>
+      <button id="cartClose"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty" id="cartEmpty">
+        <i class="fa fa-shopping-bag"></i>
+        <p>Your bag is empty</p>
+        <a href="#newArrivals" class="btn btn-primary">Start Shopping</a>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cartTotal">₹0</strong>
+      </div>
+      <button class="btn btn-primary full-width">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+/* ===== THE SOULED STORE - MAIN SCRIPT ===== */
+
+/* -------- DATA -------- */
+const PRODUCTS = [
+  { id:1,  name:"Dragon Force Oversized Tee",  theme:"Anime",      price:699,  original:999,  off:30, badge:"new", sizes:["S","M","L","XL","XXL"], emoji:"🐉", category:"men",   img:"https://images.unsplash.com/photo-1618519764620-7403abdbdfe9?w=400&q=80" },
+  { id:2,  name:"Soul Reaper Classic Tee",      theme:"Anime",      price:549,  original:799,  off:31, badge:"hot", sizes:["S","M","L","XL"],       emoji:"⚔️", category:"men",   img:"https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&q=80" },
+  { id:3,  name:"Ninja Way Graphic Tee",         theme:"Anime",      price:599,  original:899,  off:33, badge:"new", sizes:["S","M","L","XL","XXL"], emoji:"🍥", category:"men",   img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" },
+  { id:4,  name:"Iron Legacy Hoodie",            theme:"Marvel",     price:1199, original:1799, off:33, badge:"",    sizes:["S","M","L","XL"],       emoji:"🦾", category:"men",   img:"https://images.unsplash.com/photo-1593784991095-a205069470b6?w=400&q=80" },
+  { id:5,  name:"Captain's Shield Tee",          theme:"Marvel",     price:649,  original:899,  off:28, badge:"hot", sizes:["S","M","L","XL","XXL"], emoji:"🛡️", category:"men",   img:"https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=400&q=80" },
+  { id:6,  name:"Gamma Surge Oversized",         theme:"Marvel",     price:699,  original:999,  off:30, badge:"new", sizes:["M","L","XL","XXL"],     emoji:"💚", category:"men",   img:"https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&q=80" },
+  { id:7,  name:"Sakura Bloom Crop Tee",         theme:"Anime",      price:549,  original:799,  off:31, badge:"new", sizes:["XS","S","M","L"],       emoji:"🌸", category:"women", img:"https://images.unsplash.com/photo-1554568218-0f1715e72254?w=400&q=80" },
+  { id:8,  name:"Wonder Drop Hoodie",            theme:"DC",         price:1099, original:1599, off:31, badge:"",    sizes:["S","M","L","XL"],       emoji:"⚡", category:"women", img:"https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&q=80" },
+  { id:9,  name:"Breaking Law Oversized",        theme:"TV & Movies",price:749,  original:999,  off:25, badge:"hot", sizes:["S","M","L","XL","XXL"], emoji:"🧪", category:"men",   img:"https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400&q=80" },
+  { id:10, name:"Heisenberg Classic Tee",        theme:"TV & Movies",price:599,  original:799,  off:25, badge:"",    sizes:["S","M","L","XL"],       emoji:"🎩", category:"men",   img:"https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=400&q=80" },
+  { id:11, name:"Mini Heroes Tee",               theme:"Marvel",     price:449,  original:599,  off:25, badge:"new", sizes:["2-4Y","4-6Y","6-8Y"],  emoji:"🦸", category:"kids",  img:"https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=400&q=80" },
+  { id:12, name:"Level Up Gaming Tee",           theme:"Gaming",     price:649,  original:899,  off:28, badge:"",    sizes:["S","M","L","XL","XXL"], emoji:"🎮", category:"men",   img:"https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?w=400&q=80" },
+];
+
+const BESTSELLERS = [
+  { id:13, name:"Pirate King Oversized Tee",  theme:"Anime",      price:799,  original:1099, off:27, badge:"hot", sizes:["S","M","L","XL","XXL"], emoji:"☠️", category:"men",   img:"https://images.unsplash.com/photo-1618519764620-7403abdbdfe9?w=400&q=80" },
+  { id:14, name:"Survey Corps Graphic Tee",   theme:"Anime",      price:649,  original:899,  off:28, badge:"",    sizes:["S","M","L","XL"],       emoji:"🦅", category:"men",   img:"https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&q=80" },
+  { id:15, name:"Fullmetal Drop Hoodie",       theme:"Anime",      price:1299, original:1799, off:28, badge:"hot", sizes:["S","M","L","XL","XXL"], emoji:"⚙️", category:"men",   img:"https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&q=80" },
+  { id:16, name:"Black Panther Tee",           theme:"Marvel",     price:699,  original:999,  off:30, badge:"new", sizes:["S","M","L","XL"],       emoji:"🐾", category:"men",   img:"https://images.unsplash.com/photo-1593784991095-a205069470b6?w=400&q=80" },
+  { id:17, name:"F.R.I.E.N.D.S Central Perk", theme:"TV & Movies",price:599,  original:799,  off:25, badge:"",    sizes:["XS","S","M","L","XL"], emoji:"☕", category:"women", img:"https://images.unsplash.com/photo-1554568218-0f1715e72254?w=400&q=80" },
+  { id:18, name:"Matrix Code Oversized",       theme:"Movies",     price:749,  original:999,  off:25, badge:"new", sizes:["S","M","L","XL","XXL"], emoji:"💊", category:"men",   img:"https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400&q=80" },
+  { id:19, name:"Demon Slayer Drop Tee",       theme:"Anime",      price:699,  original:999,  off:30, badge:"hot", sizes:["S","M","L","XL"],       emoji:"🗡️", category:"men",   img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" },
+  { id:20, name:"Originals Inked Logo Tee",    theme:"Originals",  price:549,  original:749,  off:27, badge:"new", sizes:["S","M","L","XL","XXL"], emoji:"🖋️", category:"men",   img:"https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=400&q=80" },
+];
+
+/* -------- STATE -------- */
+let cart = [];
+let wishlist = [];
+let activeTab = "all";
+let sliderIndex = 0;
+let sliderTimer;
+
+/* -------- UTILITIES -------- */
+function formatPrice(n) { return "₹" + n.toLocaleString("en-IN"); }
+
+function showToast(msg, duration = 2500) {
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), duration);
+}
+
+/* -------- PRODUCT CARD -------- */
+function createProductCard(product) {
+  const inWishlist = wishlist.includes(product.id);
+  const badge = product.badge
+    ? `<span class="product-badge ${product.badge}">${product.badge === "new" ? "NEW" : "HOT"}</span>`
+    : "";
+  const off = product.off
+    ? `<span class="price-off">-${product.off}%</span>`
+    : "";
+  const sizes = product.sizes.map(s => `<span class="size-chip">${s}</span>`).join("");
+
+  const card = document.createElement("div");
+  card.className = "product-card";
+  card.innerHTML = `
+    <div class="product-image-wrap">
+      <img class="product-img-real" src="${product.img}" alt="${product.name}" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="product-image-placeholder" style="background:${randomPastel()};display:none;">
+        <div class="pimg-icon">${product.emoji}</div>
+        <div class="pimg-name">${product.theme}</div>
+      </div>
+      ${badge}
+      <button class="product-wishlist ${inWishlist ? "active" : ""}" data-id="${product.id}">
+        <i class="fa${inWishlist ? "-solid" : "-regular"} fa-heart"></i>
+      </button>
+      <div class="product-actions" data-id="${product.id}">
+        + Add to Bag
+      </div>
+    </div>
+    <div class="product-info">
+      <p class="product-theme">${product.theme}</p>
+      <p class="product-name">${product.name}</p>
+      <div class="product-price">
+        <span class="price-current">${formatPrice(product.price)}</span>
+        <span class="price-original">${formatPrice(product.original)}</span>
+        ${off}
+      </div>
+      <div class="product-sizes">${sizes}</div>
+    </div>
+  `;
+
+  // Wishlist toggle
+  card.querySelector(".product-wishlist").addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleWishlist(product.id, card.querySelector(".product-wishlist"));
+  });
+
+  // Add to cart
+  card.querySelector(".product-actions").addEventListener("click", (e) => {
+    e.stopPropagation();
+    addToCart(product);
+  });
+
+  return card;
+}
+
+function randomPastel() {
+  const hue = Math.floor(Math.random() * 360);
+  return `hsl(${hue}, 60%, 93%)`;
+}
+
+/* -------- RENDER PRODUCTS -------- */
+function renderProducts(containerId, products) {
+  const grid = document.getElementById(containerId);
+  grid.innerHTML = "";
+  products.forEach(p => grid.appendChild(createProductCard(p)));
+}
+
+function filterProducts(tab) {
+  activeTab = tab;
+  const filtered = tab === "all" ? PRODUCTS : PRODUCTS.filter(p => p.category === tab);
+  renderProducts("productGrid", filtered);
+}
+
+/* -------- TABS -------- */
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    filterProducts(btn.dataset.tab);
+  });
+});
+
+/* -------- WISHLIST -------- */
+function toggleWishlist(id, btn) {
+  if (wishlist.includes(id)) {
+    wishlist = wishlist.filter(i => i !== id);
+    btn.classList.remove("active");
+    btn.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+    showToast("Removed from wishlist");
+  } else {
+    wishlist.push(id);
+    btn.classList.add("active");
+    btn.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+    showToast("❤️ Added to wishlist!");
+  }
+  updateWishlistCount();
+}
+
+function updateWishlistCount() {
+  document.getElementById("wishlistCount").textContent = wishlist.length;
+}
+
+/* -------- CART -------- */
+function addToCart(product) {
+  const existing = cart.find(i => i.id === product.id);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+  updateCart();
+  showToast(`🛍️ "${product.name}" added to bag!`);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  updateCart();
+  renderCartItems();
+}
+
+function updateCart() {
+  const count = cart.reduce((sum, i) => sum + i.qty, 0);
+  document.getElementById("cartCount").textContent = count;
+  document.getElementById("cartItemCount").textContent = count;
+
+  const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+  document.getElementById("cartTotal").textContent = formatPrice(total);
+
+  const hasItems = cart.length > 0;
+  document.getElementById("cartEmpty").style.display = hasItems ? "none" : "flex";
+  document.getElementById("cartItems").style.display = hasItems ? "flex" : "none";
+  document.getElementById("cartFooter").style.display = hasItems ? "block" : "none";
+}
+
+function renderCartItems() {
+  const container = document.getElementById("cartItems");
+  container.innerHTML = "";
+  cart.forEach(item => {
+    const el = document.createElement("div");
+    el.className = "cart-item";
+    el.innerHTML = `
+      <div class="cart-item-img">${item.emoji}</div>
+      <div class="cart-item-details">
+        <p class="cart-item-name">${item.name}</p>
+        <p class="cart-item-meta">${item.theme} · Qty: ${item.qty}</p>
+        <p class="cart-item-price">${formatPrice(item.price * item.qty)}</p>
+        <span class="cart-item-remove" data-id="${item.id}">Remove</span>
+      </div>
+    `;
+    el.querySelector(".cart-item-remove").addEventListener("click", () => {
+      removeFromCart(item.id);
+    });
+    container.appendChild(el);
+  });
+}
+
+/* CART DRAWER */
+const cartDrawer = document.getElementById("cartDrawer");
+const cartOverlay = document.getElementById("cartOverlay");
+
+document.getElementById("cartBtn").addEventListener("click", () => {
+  cartDrawer.classList.add("active");
+  cartOverlay.classList.add("active");
+  renderCartItems();
+  document.body.style.overflow = "hidden";
+});
+document.getElementById("cartClose").addEventListener("click", closeCart);
+cartOverlay.addEventListener("click", closeCart);
+
+function closeCart() {
+  cartDrawer.classList.remove("active");
+  cartOverlay.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+/* -------- HERO SLIDER -------- */
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+const totalSlides = slides.length;
+
+function goToSlide(index) {
+  slides[sliderIndex].classList.remove("active");
+  dots[sliderIndex].classList.remove("active");
+  sliderIndex = (index + totalSlides) % totalSlides;
+  slides[sliderIndex].classList.add("active");
+  dots[sliderIndex].classList.add("active");
+}
+
+function nextSlide() { goToSlide(sliderIndex + 1); }
+function prevSlide() { goToSlide(sliderIndex - 1); }
+
+document.getElementById("sliderNext").addEventListener("click", () => {
+  nextSlide();
+  resetSliderTimer();
+});
+document.getElementById("sliderPrev").addEventListener("click", () => {
+  prevSlide();
+  resetSliderTimer();
+});
+dots.forEach((dot, i) => {
+  dot.addEventListener("click", () => {
+    goToSlide(i);
+    resetSliderTimer();
+  });
+});
+
+function startSliderTimer() {
+  sliderTimer = setInterval(nextSlide, 4000);
+}
+function resetSliderTimer() {
+  clearInterval(sliderTimer);
+  startSliderTimer();
+}
+startSliderTimer();
+
+/* -------- SEARCH -------- */
+const searchToggle = document.getElementById("searchToggle");
+const searchBox = document.getElementById("searchBox");
+const searchClose = document.getElementById("searchClose");
+const searchInput = document.getElementById("searchInput");
+
+searchToggle.addEventListener("click", () => {
+  searchBox.classList.add("active");
+  searchInput.focus();
+});
+searchClose.addEventListener("click", () => {
+  searchBox.classList.remove("active");
+  searchInput.value = "";
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    searchBox.classList.remove("active");
+    searchInput.value = "";
+  }
+});
+
+/* -------- MOBILE NAV -------- */
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileNav = document.getElementById("mobileNav");
+const mobileNavOverlay = document.getElementById("mobileNavOverlay");
+const mobileNavClose = document.getElementById("mobileNavClose");
+
+hamburgerBtn.addEventListener("click", () => {
+  mobileNav.classList.add("active");
+  mobileNavOverlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+});
+function closeMobileNav() {
+  mobileNav.classList.remove("active");
+  mobileNavOverlay.classList.remove("active");
+  document.body.style.overflow = "";
+}
+mobileNavClose.addEventListener("click", closeMobileNav);
+mobileNavOverlay.addEventListener("click", closeMobileNav);
+
+/* -------- HEADER SCROLL -------- */
+const header = document.getElementById("header");
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 40) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+}, { passive: true });
+
+/* -------- NEWSLETTER -------- */
+document.getElementById("newsletterBtn").addEventListener("click", () => {
+  const email = document.getElementById("newsletterEmail").value.trim();
+  if (!email || !email.includes("@")) {
+    showToast("⚠️ Please enter a valid email address.");
+    return;
+  }
+  showToast("🎉 You're subscribed! Welcome to the fam.");
+  document.getElementById("newsletterEmail").value = "";
+});
+
+/* -------- INIT -------- */
+filterProducts("all");
+renderProducts("bestSellerGrid", BESTSELLERS);
+updateCart();
+updateWishlistCount();
+
+</script>
+</body>
+</html>

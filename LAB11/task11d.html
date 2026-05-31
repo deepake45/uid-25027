@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Number Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f8f8f8;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .error {
+            color: #d32f2f;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Mobile Number Validation</h2>
+    <div class="form-group">
+        <label for="mobile">Mobile Number:</label>
+        <input type="text" id="mobile" name="mobile" placeholder="Enter 10-digit mobile number">
+        <div id="mobileError" class="error"></div>
+    </div>
+    <script>
+        const mobileInput = document.getElementById('mobile');
+        const mobileError = document.getElementById('mobileError');
+
+        mobileInput.addEventListener('blur', () => {
+            const value = mobileInput.value.trim();
+            const digitsOnly = /^[0-9]{10}$/;
+
+            if (!value) {
+                mobileError.textContent = 'Mobile number is required.';
+                return;
+            }
+
+            if (!digitsOnly.test(value)) {
+                mobileError.textContent = 'Enter exactly 10 digits.';
+            } else {
+                mobileError.textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>
